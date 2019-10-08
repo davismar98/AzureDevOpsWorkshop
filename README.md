@@ -30,12 +30,12 @@ Now you should be able to see the newly created project.
 
 1. The first thing you need to do after opening the DevOps project is to enable some features in your profile settings.
 To so, at the top right corner, click on the initials of your name (that is your profile), then click on the three dots pointed in the next screenshot and go to 'Preview features'.
-![Azure DevOps enable features](/assets/azure_devops_10.png "Azure DevOps enable features")
+![Azure DevOps enable features](/assets/azure_devops_10.png "Azure DevOps enable features")  
 Make sure you have 'Multi-stage pipelines' and 'New service connections experience' enabled. You can proceed to close that window. 
 ![Azure DevOps enable features](/assets/azure_devops_11.png "Azure DevOps enable features")
 ### Creating a service connection
-2. Now, you need to create a service connection with your Azure account (so it is possible to deploy the resources). At the the bottom left corner, click on 'Project settings'.
-![Azure DevOps service connection](/assets/azure_devops_12.png "Azure DevOps service connection")
+2. Now, you need to create a service connection with your Azure account (so it is possible to deploy the resources). At the the bottom left corner, click on 'Project settings'.    
+![Azure DevOps service connection](/assets/azure_devops_12.png "Azure DevOps service connection")     
 Then, click on the blue button 'Create service connection' and a floating window will popup". There, select Azure Resource Manager and click on 'Next'.
 ![Azure DevOps service connection](/assets/azure_devops_13.png "Azure DevOps service connection")
 Another window will appear. There, you should configure the connection using your Azure subscription. The connection name *must* be 'Azure', since that is the name used in the YAML pipeline. In 'Scope level' select 'Subscription', then using the dropdown menu, choose the active Azure subscription you want to use. Do not select any specific Resource Group. Finally, make sure you have checked the 'Allow all pipelines to use this connection' box. Click on OK.
@@ -48,4 +48,26 @@ There already is a pipeline called 'PartsUnlimited'.
 ![Azure DevOps Pipelines](/assets/azure_devops_7.png "Azure DevOps Pipelines")
 After you select the pipeline, you will see at the top right corner an 'Edit' button. Click on that.![Azure DevOps Pipelines](/assets/azure_devops_8.png "Azure DevOps Pipelines")
 
-4. Now, an editable file called _azure-pipelines.yml_ will be opened. The only modification you *must* do is to replace the following variables with a unique name (we suggest appending your name at the end). If you don't do so, the pipeline will fail; this is because those variables are used to name the Azure resources needed. Make sure not to use dashes or undescores. Feel free to use numbers, though. ![Azure DevOps Pipelines](/assets/azure_devops_9.png "Azure DevOps Pipelines")
+4. Now, an editable file called _azure-pipelines.yml_ will be opened. The only modification you *must* do is to replace the following variables with a unique name (we suggest appending your name at the end). If you don't do so, the pipeline will fail; this is because those variables are used to name the Azure resources to be deployed. Make sure not to use dashes or undescores, but feel free to use numbers, though. ![Azure DevOps Pipelines](/assets/azure_devops_9.png "Azure DevOps Pipelines")
+Hit 'Save' and then 'Run'.
+5. Now, you can see the pipeline running. There are 5 stages defined in the YAML file.
+ ![Azure DevOps Pipelines](/assets/azure_devops_17.png "Azure DevOps Pipelines")
+If you click on the pipeline, you will be able to see details for each stage.![Azure DevOps Pipelines](/assets/azure_devops_16.png "Azure DevOps Pipelines")
+Also, if you click on any stage, it is possible to see the complete logs for every job.![Azure DevOps Pipelines](/assets/azure_devops_18.png "Azure DevOps Pipelines")
+---
+## Azure Portal - What has been created
+
+* Go back to the Azure Portal and find the Resource Groups page. There, you should find a resource group with the name you provided when modifying the YAML (it might be something like 'ENDAVAWORKSHOPYOURNAME').![Azure Resource Groups](/assets/azure_devops_19.png "Azure Resource Groups")
+When you click on the resource group, you will see all the resources deployed with the Pipeline. ![Azure Resources](/assets/azure_devops_20.png "Azure Resources")
+### The resources:
+* 1 App Service Plan (Standard tier, size Small). This is the computing power (Virtual Machines or servers) that will host the Web App.
+* 1 App Service. PaaS for hosting websites. This hosts the production App.
+* 2 Deployment slots. Live apps (based on the same App Service) with their own hostnames. One slot is for 'Development' and the other for 'Staging'.
+* 3 SQL servers, each with their own SQL database. 
+* 3 Application Insights for each environment. APM.
+
+### Browsing the Web App.
+
+Select the App Service Resource. In the overview tab, you can see a button 'Browse'. Click on it and a new tab will be opened. Also, you can see the URL to the left side.  ![Azure Web](/assets/azure_devops_21.png "Azure Web")
+Wait a couple of seconds and you will see the Parts Unlimited site live. 
+![Website live](/assets/azure_devops_22.png "Website live")
