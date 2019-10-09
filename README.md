@@ -31,7 +31,7 @@ Now you should be able to see the newly created project.
 1. The first thing you need to do after opening the DevOps project is to enable some features in your profile settings.
 To so, at the top right corner, click on the initials of your name (that is your profile), then click on the three dots pointed in the next screenshot and go to 'Preview features'.                         
 ![Azure DevOps enable features](/assets/azure_devops_10.png "Azure DevOps enable features")  
-Make sure you have 'Multi-stage pipelines' and 'New service connections experience' enabled. You can proceed to close that window. 
+Make sure you have 'Multi-stage pipelines' and 'New service connections experience' enabled. You can proceed to close that window.                             
 ![Azure DevOps enable features](/assets/azure_devops_11.png "Azure DevOps enable features")
 ### Creating a service connection
 2. Now, you need to create a service connection with your Azure account (so it is possible to deploy the resources). At the the bottom left corner, click on 'Project settings'.    
@@ -57,7 +57,7 @@ Also, if you click on any stage, it is possible to see the complete logs for eve
 ---
 ## Azure Portal - What has been created
 
-* Go back to the Azure Portal and find the Resource Groups page. There, you should find a resource group with the name you provided when modifying the YAML (it might be something like 'ENDAVAWORKSHOPYOURNAME').![Azure Resource Groups](/assets/azure_devops_19.png "Azure Resource Groups")
+* Go back to the Azure Portal and find the Resource Groups page. There, you should find a resource group with the name you provided when modifying the YAML (it might be something like 'ENDAVAWORKSHOP${YOURNAME}').![Azure Resource Groups](/assets/azure_devops_19.png "Azure Resource Groups")
 When you click on the resource group, you will see all the resources deployed with the Pipeline. ![Azure Resources](/assets/azure_devops_20.png "Azure Resources")
 ### The resources:
 * 1 App Service Plan (Standard tier, size Small). This is the computing power (Virtual Machines or servers) that will host the Web App.
@@ -85,6 +85,17 @@ There, you should see a blue button 'Create'. Click on it and a new floating win
 Now, everytime a new deployment to the Production environment is triggered, you must manually approve it before it is executed (If there are more than one approver,  all the specified approvers must approve for the stage to proceed). 
 ![Environments](/assets/azure_devops_25.png "Environments")
 Do the same for the QA environment. 
+
+### Testing the CI/CD
+
+There is one section we haven explored yet: Repos. There resides the source code for the .NET App (Parts Unlimited) we have been working with. 
+
+Let's edit a line of code and see what happens. Follow the path ``PartsUnlimited-aspnet45/src/PartsUnlimitedWebsite/Views/Home/Index.cshtml``
+
+Click on the 'Edit' button and modify the line 28 to '70%', for example (the idea is to make a noticeable change in the home page). Then, the 'Edit' in the button should have changed to 'Commit' instead. Commit the changes.
+![Code](/assets/azure_devops_30.png "Code")
+
+If you go back to the Pipelines section, a new run should be triggered automatically. Remember to approve the deployments to the QA and Production environments when asked. After the pipeline finishes running, the changes should be live. Reload the website page and profit.
 
 ### Boards
 
